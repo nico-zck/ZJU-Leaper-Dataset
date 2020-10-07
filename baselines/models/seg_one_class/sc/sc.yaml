@@ -1,0 +1,23 @@
+DATASET:
+  dataset_dir: /home/nico/Dataset/FabricFinal
+  fabrics: all
+  color_mode: gray
+  normalization: histeq
+  image_size: 256
+  patch_size: 128
+  patch_stride: 64
+  setting: setting1
+HPARAM:
+  n_components: 128
+  alpha: 0.01
+  n_iter: 500
+  batch_size: 64
+  n_jobs: 8
+TRAIN:
+  eval_train: False
+  epoch_dev_eval: False
+  figure: False
+  vis_rate: 0.
+  vis_bad: False
+PROCESSING: { }
+OTHER: { }

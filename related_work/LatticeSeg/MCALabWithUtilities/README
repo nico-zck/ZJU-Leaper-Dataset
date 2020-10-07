@@ -1,0 +1,18 @@
+MCALab110 is a collection of Matlab programs that implements:
+     * Signal or Image decomposition using MCA algorithm.
+     * Signal or Image inpainting using either EM algorithm or MCA algorithm.
+
+To reproduce figures and examples, see scripts in the MACLAB110/1D/Scripts and MACLAB110/1D/Scripts.
+
+
+download at http://www.greyc.ensicaen.fr/~jfadili/demos/WaveRestore/downloads/mcalab.html.
+
+
+To install the package, see INSTALL.
+
+Contact:
+Jalal.Fadili@greyc.ensicaen.fr
+GREYC-CNRS-ENSICAEN, France
+http://www.greyc.ensicaen.fr/~jfadili/
+
+

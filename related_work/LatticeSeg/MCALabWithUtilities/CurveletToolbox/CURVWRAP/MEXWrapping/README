@@ -1,0 +1,18 @@
+This directory includes matlab interface of the curvelet transform
+using wrapping.
+
+Basic functions
+	fdct_wrapping.m -- forward curvelet transform
+	ifdct_wrapping.m -- inverse curvelet transform
+	fdct_wrapping_param.m -- returns the location of each curvelet in phase-space
+
+Useful tools
+	fdct_wrapping_dispcoef.m -- returns a matrix containing all curvelet coefficients
+	fdct_wrapping_pos2idx.m -- for fixed scale and fixed direction, returns
+		the curvelet which is closest to a certain point on the image
+
+Demos
+	fdct_wrapping_demo_basic.m -- display the shape of a curvelet
+	fdct_wrapping_demo_recon.m -- partial reconstruction using curvelet
+	fdct_wrapping_demo_disp.m -- display all the curvelet coefficients of an image
+	fdct_wrapping_demo_denoise.m -- image denoising using curvelet

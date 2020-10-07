@@ -1,0 +1,7 @@
+run('run_hku_box')
+run('run_hku_star')
+run('run_hku_dot')
+run('run_p1')
+run('run_p2')
+run('run_p3')
+run('run_p4')

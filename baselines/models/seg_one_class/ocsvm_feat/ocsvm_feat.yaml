@@ -1,0 +1,19 @@
+DATASET:
+  dataset_dir: /home/nico/Dataset/FabricFinal
+  fabrics: all
+  color_mode: gray
+  normalization: '[-1,1]'
+  image_size: 512
+  patch_size: 256
+  patch_stride: 64
+  setting: setting1
+HPARAM:
+  kernel: rbf
+TRAIN:
+  eval_train: False
+  epoch_dev_eval: False
+  figure: False
+  vis_rate: 0.
+  vis_bad: False
+PROCESSING: { }
+OTHER: { }

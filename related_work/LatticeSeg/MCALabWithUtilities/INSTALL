@@ -1,0 +1,45 @@
+		MCALabC110 INSTALL PROCEDURE UNDER UNIX/LINUX/MACOS X.
+		 TODO: this toolbox has not been tested under Windows.
+
+1. PREREQUISITE
+
+  a. Install the version .802 of WaveLab software package if it has not 
+   been installed; check 
+	http://www-stat.Stanford.edu/~wavelab/
+   for installation instructions.
+
+  b. Optional:
+
+    - The MCALabC110 toolbox uses the undecimated DWT code from DSP Rice 
+    and the 2nd generation fast curvelet transform.
+    These two transforms are included for convenience in this package in the UDWT and CURV subdirectory.
+    Their mex files have been compiled for Unix Solaris/Linux/MACOS X.
+    Please see www.dsp-rice.edu and curvelet.org for licence agreement.
+    
+    NOTE: the CurveLab wrapping functions (i)fdct_wrapping.m have been slightly modified from the original 
+    to implement curvelets at the finest scale.
+
+
+2. UNPACK THE ARCHIVE 
+
+  a. Copy MCALabCWithUtilities.tgz to to the place you want the MCALab Directory to reside.
+
+  b. Uncompress
+
+     tar xfz MCALabCWithUtilities.tgz
+
+  c. After you uncompress the file for your machine, you should have
+   the following directory structure:
+    	MCALabWithUtilities
+    	MCALabWithUtilities/CurveletToolbox/
+    	MCALabWithUtilities/MCALab110/
+    	MCALabWithUtilities/UDWT/
+    	MCALabWithUtilities/Utils/
+    	   	
+
+3. SET YOUR PATH
+   a. Edit the file MCAPATH.m, modify the line to your path:
+	MCALABPATH = ['<AbsolutePathNameforMCALabWithUtilitiesMainDirectory>'];
+
+   b. Be sure that MCAPath executes each time you start Matlab by modifying your startup.m.
+

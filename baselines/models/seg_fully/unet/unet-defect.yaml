@@ -1,0 +1,23 @@
+DATASET:
+  dataset_dir: /home/nico/Dataset/FabricFinal
+  fabrics: all
+  normalization: 'zscore'
+  color_mode: rgb
+  image_size: 256
+  setting: setting5
+HPARAM:
+  base_filters: 8
+  lr: 5.e-4
+  batch_size: 32
+  epochs: 200
+  weight_decay: 1.e-3
+TRAIN:
+  loss_sample_points: 1
+  save_epoch_freq: 1000
+  eval_train: False
+  epoch_dev_eval: False
+  figure: False
+  vis_rate: 0.
+  vis_bad: False
+PROCESSING: { }
+OTHER: { }
