@@ -92,9 +92,9 @@ class ZLImage:
         :return: {'pattern': int, 'id': int, 'defective': boolean}
         """
         xml_path = self.xml_path.format(id=self.id)
-        p_id = int(ET.parse(xml_path).find('pattern').text)
+        p_id = int(ET.parse(xml_path).find('pattern_id').text)
         defect_flag = bool(int(ET.parse(xml_path).find('defective').text))
-        info = {'pattern': p_id, 'id': self.id, 'defective': defect_flag}
+        info = {'pattern_id': p_id, 'id': self.id, 'defective': defect_flag}
         return info
 
     def annotation(self, ann_type: str = None):
@@ -139,7 +139,7 @@ ZLIMGS = List[ZLImage]
 
 
 class ZLFabric:
-    def __init__(self, dir: str, fabric: Union[str, int], setting: Union[str, int], seed: int = None):
+    def __init__(self, dir: str, fabric: Union[str, int], setting: Union[str, int], seed: int = 0):
         """
         Create an object to manage ZJU-Leaper dataset.
 
@@ -178,9 +178,9 @@ class ZLFabric:
 
         self.rnd = random.Random(seed)
 
-    def create_zl_imgs_given_ids(self, ids: list, subset: str, ann_type: str) -> ZLIMGS:
+    def _create_zl_imgs_given_ids(self, ids: list, subset: str, ann_type: str) -> ZLIMGS:
         """
-
+        Create ZLImage objects given the image IDs
         :param ids:
         :param subset: ["none", "small", "train", "dev", "test"]
         :param ann_type: ["none", "label", "bbox", "mask"]
@@ -192,6 +192,7 @@ class ZLFabric:
         if subset == 'none':
             ids = []
         elif subset == 'small':
+            ### WARNING: the alteration of random seed will effect the sample of "small" subset
             ids = self.rnd.sample(ids, len(ids) // 10)
         else:
             pass
@@ -219,20 +220,20 @@ class ZLFabric:
         ids_train_defect = ids_json['defect']['train']
 
         # train
-        zlimgs_train_normal = self.create_zl_imgs_given_ids(ids=ids_train_normal,
-                                                            subset=CONFIG[self.setting]['normal_train'],
-                                                            ann_type=CONFIG[self.setting]['ann_train'])
-        zlimgs_train_defect = self.create_zl_imgs_given_ids(ids=ids_train_defect,
-                                                            subset=CONFIG[self.setting]['defect_train'],
-                                                            ann_type=CONFIG[self.setting]['ann_train'])
+        zlimgs_train_normal = self._create_zl_imgs_given_ids(ids=ids_train_normal,
+                                                             subset=CONFIG[self.setting]['normal_train'],
+                                                             ann_type=CONFIG[self.setting]['ann_train'])
+        zlimgs_train_defect = self._create_zl_imgs_given_ids(ids=ids_train_defect,
+                                                             subset=CONFIG[self.setting]['defect_train'],
+                                                             ann_type=CONFIG[self.setting]['ann_train'])
 
         # train eval
-        zlimgs_train_eval_normal = self.create_zl_imgs_given_ids(ids=ids_train_normal,
-                                                                 subset=CONFIG[self.setting]['normal_train'],
-                                                                 ann_type=CONFIG[self.setting]['ann_eval'])
-        zlimgs_train_eval_defect = self.create_zl_imgs_given_ids(ids=ids_train_defect,
-                                                                 subset=CONFIG[self.setting]['defect_train'],
-                                                                 ann_type=CONFIG[self.setting]['ann_eval'])
+        zlimgs_train_eval_normal = self._create_zl_imgs_given_ids(ids=ids_train_normal,
+                                                                  subset=CONFIG[self.setting]['normal_train'],
+                                                                  ann_type=CONFIG[self.setting]['ann_eval'])
+        zlimgs_train_eval_defect = self._create_zl_imgs_given_ids(ids=ids_train_defect,
+                                                                  subset=CONFIG[self.setting]['defect_train'],
+                                                                  ann_type=CONFIG[self.setting]['ann_eval'])
 
         return zlimgs_train_normal, zlimgs_train_defect, zlimgs_train_eval_normal, zlimgs_train_eval_defect
 
@@ -267,24 +268,24 @@ class ZLFabric:
             ids_k_train_defect = list(itertools.chain(*_ids_folds_defect))
 
             # train
-            zlimgs_k_train_normal = self.create_zl_imgs_given_ids(ids=ids_k_train_normal,
-                                                                  subset=CONFIG[self.setting]['normal_train'],
-                                                                  ann_type=CONFIG[self.setting]['ann_train'])
-            zlimgs_k_train_defect = self.create_zl_imgs_given_ids(ids=ids_k_train_defect,
-                                                                  subset=CONFIG[self.setting]['defect_train'],
-                                                                  ann_type=CONFIG[self.setting]['ann_train'])
+            zlimgs_k_train_normal = self._create_zl_imgs_given_ids(ids=ids_k_train_normal,
+                                                                   subset=CONFIG[self.setting]['normal_train'],
+                                                                   ann_type=CONFIG[self.setting]['ann_train'])
+            zlimgs_k_train_defect = self._create_zl_imgs_given_ids(ids=ids_k_train_defect,
+                                                                   subset=CONFIG[self.setting]['defect_train'],
+                                                                   ann_type=CONFIG[self.setting]['ann_train'])
             # train-eval
-            zlimgs_k_train_eval_normal = self.create_zl_imgs_given_ids(ids=ids_k_train_normal,
-                                                                       subset=CONFIG[self.setting]['normal_train'],
-                                                                       ann_type=CONFIG[self.setting]['ann_eval'])
-            zlimgs_k_train_eval_defect = self.create_zl_imgs_given_ids(ids=ids_k_train_defect,
-                                                                       subset=CONFIG[self.setting]['defect_train'],
-                                                                       ann_type=CONFIG[self.setting]['ann_eval'])
+            zlimgs_k_train_eval_normal = self._create_zl_imgs_given_ids(ids=ids_k_train_normal,
+                                                                        subset=CONFIG[self.setting]['normal_train'],
+                                                                        ann_type=CONFIG[self.setting]['ann_eval'])
+            zlimgs_k_train_eval_defect = self._create_zl_imgs_given_ids(ids=ids_k_train_defect,
+                                                                        subset=CONFIG[self.setting]['defect_train'],
+                                                                        ann_type=CONFIG[self.setting]['ann_eval'])
             # dev
-            zlimgs_k_dev_normal = self.create_zl_imgs_given_ids(ids=ids_k_dev_normal, subset='dev',
-                                                                ann_type=CONFIG[self.setting]['ann_eval'])
-            zlimgs_k_dev_defect = self.create_zl_imgs_given_ids(ids=ids_k_dev_defect, subset='dev',
-                                                                ann_type=CONFIG[self.setting]['ann_eval'])
+            zlimgs_k_dev_normal = self._create_zl_imgs_given_ids(ids=ids_k_dev_normal, subset='dev',
+                                                                 ann_type=CONFIG[self.setting]['ann_eval'])
+            zlimgs_k_dev_defect = self._create_zl_imgs_given_ids(ids=ids_k_dev_defect, subset='dev',
+                                                                 ann_type=CONFIG[self.setting]['ann_eval'])
             zlimgs_folds.append((zlimgs_k_train_normal, zlimgs_k_train_defect,
                                  zlimgs_k_train_eval_normal, zlimgs_k_train_eval_defect,
                                  zlimgs_k_dev_normal, zlimgs_k_dev_defect))
@@ -301,10 +302,10 @@ class ZLFabric:
         ids_test_defect = ids_json['defect']['test']
 
         # test
-        zlimgs_test_normal = self.create_zl_imgs_given_ids(ids=ids_test_normal,
-                                                           subset=CONFIG[self.setting]['normal_test'],
-                                                           ann_type=CONFIG[self.setting]['ann_test'])
-        zlimgs_test_defect = self.create_zl_imgs_given_ids(ids=ids_test_defect,
-                                                           subset=CONFIG[self.setting]['defect_test'],
-                                                           ann_type=CONFIG[self.setting]['ann_test'])
+        zlimgs_test_normal = self._create_zl_imgs_given_ids(ids=ids_test_normal,
+                                                            subset=CONFIG[self.setting]['normal_test'],
+                                                            ann_type=CONFIG[self.setting]['ann_test'])
+        zlimgs_test_defect = self._create_zl_imgs_given_ids(ids=ids_test_defect,
+                                                            subset=CONFIG[self.setting]['defect_test'],
+                                                            ann_type=CONFIG[self.setting]['ann_test'])
         return zlimgs_test_normal, zlimgs_test_defect

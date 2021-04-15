@@ -4,9 +4,9 @@
 @Author : Nico
 """
 from collections import OrderedDict
-from typing import Tuple
 
 import numpy as np
+from typing import Tuple
 
 
 def _compute_confusion_matrix(binary_target: np.ndarray, binary_pred: np.ndarray):

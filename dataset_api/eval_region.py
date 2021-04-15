@@ -240,7 +240,7 @@ def __f1(pre, rec):
 
 
 def evaluation_region(binary_pixel_pred: np.ndarray, binary_pixel_target: np.ndarray,
-                      diff_scale: bool = False, return_info: bool = False):
+                      diff_size: bool = False, return_info: bool = False):
     binary_pixel_pred = binary_pixel_pred.squeeze()
     binary_pixel_target = binary_pixel_target.squeeze()
 
@@ -288,7 +288,7 @@ def evaluation_region(binary_pixel_pred: np.ndarray, binary_pixel_target: np.nda
     region_metrics['Rec'] = _recall_for_region_target(info_target_overlap, iou_thresh=IOUs,
                                                       ol_thresh=OVERLAP_THRESH)
     region_metrics['F1'] = __f1(region_metrics['Pre'], region_metrics['Rec'])
-    if diff_scale:
+    if diff_size:
         region_metrics['Pre_small'] = _precision_for_region_pred(info_pred_overlap, iou_thresh=IOUs,
                                                                  ol_thresh=OVERLAP_THRESH, scale='small')
         region_metrics['Rec_small'] = _recall_for_region_target(info_target_overlap, iou_thresh=IOUs,
