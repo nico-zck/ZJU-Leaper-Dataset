@@ -4,10 +4,9 @@
 @Author : Nico
 """
 import json
+import numpy as np
 import warnings
 from collections import OrderedDict
-
-import numpy as np
 
 from .eval_pixel import evaluation_pixel
 from .eval_region import evaluation_region
@@ -56,12 +55,12 @@ class ZLEval:
                                                         diff_size=self.eval_diff_size, return_info=True)
         sample_metrics = evaluation_sample(binary_pixel_pred=self.binary_pixel_pred,
                                            binary_pixel_target=self.binary_pixel_target, info_region=info_region)
-        summary_score = 0.4 * pixel_metrics['Dice'] + 0.4 * region_metrics['F1'] + 0.2 * sample_metrics['F1']
+        summary_score = 0.4 * pixel_metrics['F1'] + 0.4 * region_metrics['F1'] + 0.2 * sample_metrics['F1']
 
         self.metrics_dict = OrderedDict(
             # Pix_Pre=pixel_metrics['Pre'],
             # Pix_Rec=pixel_metrics['Rec'],
-            F1_Pix=pixel_metrics['Dice'],
+            F1_Pix=pixel_metrics['F1'],
 
             # Reg_Pre=region_metrics['Pre'],
             # Reg_Rec=region_metrics['Rec'],

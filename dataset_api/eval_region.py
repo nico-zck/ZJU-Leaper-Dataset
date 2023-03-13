@@ -5,10 +5,9 @@
 """
 
 import itertools
-import warnings
-
 import numpy as np
 import pandas as pd
+import warnings
 from skimage.measure import label, regionprops
 from skimage.measure._regionprops import RegionProperties
 
@@ -170,21 +169,33 @@ def _precision_for_region_pred(info_pred_overlap: pd.DataFrame, iou_thresh: floa
     :param iou_thresh:
     :return:
     """
+    # if scale == 'all':
+    #     pass
+    # elif scale == 'small':
+    #     info_pred_overlap = info_pred_overlap[
+    #         (info_pred_overlap['area_target'] <= SMALL_TH)
+    #         | (info_pred_overlap['id_target'].isna() & (info_pred_overlap['area_pred'] <= SMALL_TH))]
+    # elif scale == 'medium':
+    #     info_pred_overlap = info_pred_overlap[
+    #         ((SMALL_TH < info_pred_overlap['area_target']) & (info_pred_overlap['area_target'] < MEDIUM_TH))
+    #         | (info_pred_overlap['id_target'].isna()
+    #            & ((SMALL_TH < info_pred_overlap['area_pred']) & (info_pred_overlap['area_pred'] < MEDIUM_TH)))]
+    # elif scale == 'large':
+    #     info_pred_overlap = info_pred_overlap[
+    #         (info_pred_overlap['area_target'] >= MEDIUM_TH)
+    #         | (info_pred_overlap['id_target'].isna() & (info_pred_overlap['area_pred'] >= MEDIUM_TH))]
+    # else:
+    #     raise NotImplementedError
+
+    # NEW: the size constrains only related to the ground-truth
     if scale == 'all':
         pass
     elif scale == 'small':
-        info_pred_overlap = info_pred_overlap[
-            (info_pred_overlap['area_target'] <= SMALL_TH)
-            | (info_pred_overlap['id_target'].isna() & (info_pred_overlap['area_pred'] <= SMALL_TH))]
+        info_pred_overlap = info_pred_overlap[info_pred_overlap['area_target'] < SMALL_TH]
     elif scale == 'medium':
-        info_pred_overlap = info_pred_overlap[
-            ((SMALL_TH < info_pred_overlap['area_target']) & (info_pred_overlap['area_target'] < MEDIUM_TH))
-            | (info_pred_overlap['id_target'].isna()
-               & ((SMALL_TH < info_pred_overlap['area_pred']) & (info_pred_overlap['area_pred'] < MEDIUM_TH)))]
+        info_pred_overlap = info_pred_overlap[((SMALL_TH <= info_pred_overlap['area_target']) & (info_pred_overlap['area_target'] <= MEDIUM_TH))]
     elif scale == 'large':
-        info_pred_overlap = info_pred_overlap[
-            (info_pred_overlap['area_target'] >= MEDIUM_TH)
-            | (info_pred_overlap['id_target'].isna() & (info_pred_overlap['area_pred'] >= MEDIUM_TH))]
+        info_pred_overlap = info_pred_overlap[info_pred_overlap['area_target'] > MEDIUM_TH]
     else:
         raise NotImplementedError
 

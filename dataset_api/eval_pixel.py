@@ -3,9 +3,8 @@
 @Time   : 2019-05-07 23:53
 @Author : Nico
 """
-from collections import OrderedDict
-
 import numpy as np
+from collections import OrderedDict
 from typing import Tuple
 
 
@@ -86,6 +85,7 @@ def evaluation_pixel(binary_pixel_pred: np.ndarray, binary_pixel_target: np.ndar
         Pre=precision,
         Rec=recall,
         Dice=dice,
+        F1=dice,  # dice index is just the pixel F1-score
         # IoU=_iou(confusion),
         # nMCC=_mcc(confusion, normalized=True),
     )

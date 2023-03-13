@@ -1,13 +1,12 @@
-from typing import List
-
 import numpy as np
 import torch
 from PIL import Image, ImageOps
 from numpy.lib.stride_tricks import as_strided
 from torch.utils.data import Dataset
 from torchvision import transforms
+from typing import List
 
-from ..dataset_api.zl_fabric import ZLImage
+from dataset_api.zl_fabric import ZLImage
 
 '''
 FabricFinal RGB

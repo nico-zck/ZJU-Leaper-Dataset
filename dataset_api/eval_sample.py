@@ -9,7 +9,8 @@ import pandas as pd
 
 from .eval_pixel import _compute_confusion_matrix, _f1_score, _acc, _fpr
 
-MIN_AREA = 4
+# the size constrain is according to pixel ratio
+MIN_AREA_RATIO = 1. / 128.
 
 
 def evaluation_sample(binary_pixel_pred, binary_pixel_target, info_region):
@@ -19,10 +20,12 @@ def evaluation_sample(binary_pixel_pred, binary_pixel_target, info_region):
     info_overlap: pd.DataFrame = info_region["info_overlap"]
 
     num_img = len(binary_pixel_target)
+    _, h, w = binary_pixel_target.squeeze().shape
+    MIN_AREA_TH = (np.float_(h) * MIN_AREA_RATIO) * (np.float_(w) * MIN_AREA_RATIO)
 
     label_pred = np.zeros(num_img, dtype=np.bool)
     if not info_pred.empty:
-        img_pred_ids = info_pred[info_pred['area_pred'] > MIN_AREA]['id_img'].unique()
+        img_pred_ids = info_pred[info_pred['area_pred'] > MIN_AREA_TH]['id_img'].unique()
         label_pred[img_pred_ids] = 1
 
     label_target = np.zeros(num_img, dtype=np.bool)

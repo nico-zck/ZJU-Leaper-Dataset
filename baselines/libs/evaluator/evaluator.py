@@ -5,12 +5,11 @@ from abc import ABC, abstractmethod
 from collections import OrderedDict
 from datetime import datetime
 from math import isnan
-
 from pandas import DataFrame
 from tensorboardX import SummaryWriter
 
+from dataset_api import ZLEval
 from ..configurer import Configurer
-from ..dataset_api import ZLEval
 
 
 class _Evaluator(ABC):

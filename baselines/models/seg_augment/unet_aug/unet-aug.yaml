@@ -1,5 +1,5 @@
 DATASET:
-  dataset_dir: /home/nico/Dataset/FabricFinal
+  dataset_dir: /home/nico/Dataset/ZJU-Leaper
   fabrics: all
   normalization: '[0,1]'
   color_mode: rgb
