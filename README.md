@@ -3,7 +3,7 @@
 This dataset aims to set a benchmark suit for vision based fabric defect detection, including image dataset, evaluation
 protocol, baseline experiments.
 
-Please refer to our [website](http://www.qaas.zju.edu.cn/zju-leaper) for more information.
+Please refer to our [website](http://www.qaas.zju.edu.cn/zju-leaper) ([backup mirror](https://nico-zck.github.io/zju-leaper/)) for more information. 
 
 ## Dataset API
 
